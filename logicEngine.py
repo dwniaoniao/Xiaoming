@@ -1,8 +1,8 @@
-from function import conversations,reportTime
+from function import conversations, reportTime, weather
 import jieba
 
 
-def brain(name, speechText):
+def brain(name, speechText, cityName, cityCode):
     def checkMessage(textToCheck):
         # check if the speech text match the keyword
         if cutText(textToCheck).issubset(cutText(speechText)):
@@ -18,6 +18,8 @@ def brain(name, speechText):
         conversations.how_are_u()
     elif checkMessage("现在时间") or checkMessage("现在几点"):
         reportTime.what_is_time()
+    elif checkMessage("天气如何") or checkMessage("当前天气") or checkMessage("现在天气"):
+        weather.weather(cityName, cityCode)
     else:
         conversations.undefined()
 
@@ -26,4 +28,6 @@ def cutText(textToCut):
     # cut a Chinese string into tokens
     return set(','.join(jieba.cut(textToCut)).split(','))
 
-# brain('fuck',"现在时间。")
+# brain('test',"能不能告诉我你是谁","","")
+# brain('test',"现在时间","","")
+# brain('test', "天气如何", "广州", "CHXX0037")

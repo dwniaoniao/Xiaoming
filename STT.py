@@ -1,8 +1,8 @@
 import speech_recognition as sr
 from aip import AipSpeech
 from function import conversations
-import requests
-from ASRT.general_function.file_wav import *
+# import requests
+# from ASRT.general_function.file_wav import *
 
 APP_ID = '15829410'  # appid
 API_KEY = 'Hv1aDH7F04r2nPInpOsheXRz'  # ak
@@ -38,14 +38,14 @@ def get_file_content(filePath):
         return fp.read()
 
 
-def recognizeSpeech2():
-    # recognize speech using ASRT speech recognition server
-    url = 'http://127.0.0.1:20000/'
-    token = 'qwertasd'
-    recordAudio()
-    wavsignal, fs = read_wav_data(
-        'audio/recording.wav')
-    datas = {'token': token, 'fs': fs, 'wavs': wavsignal}
-    r = requests.post(url, datas)
-    r.encoding = 'utf-8'
-    return r.text
+# def recognizeSpeech2():
+#     # recognize speech using ASRT speech recognition server
+#     url = 'http://127.0.0.1:20000/'
+#     token = 'qwertasd'
+#     recordAudio()
+#     wavsignal, fs = read_wav_data(
+#         'audio/recording.wav')
+#     datas = {'token': token, 'fs': fs, 'wavs': wavsignal}
+#     r = requests.post(url, datas)
+#     r.encoding = 'utf-8'
+#     return r.text

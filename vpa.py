@@ -4,14 +4,15 @@ from logicEngine import brain
 from function.conversations import vpaSay
 
 name = "佳炜"
-city = "广州"
+cityName = "广州"
+cityCode = "CHXX0037"
 
 
 def main():
     speechText = recognizeSpeech()
     if speechText:
         print("我："+speechText)
-        brain(name, speechText)
+        brain(name, speechText, cityName, cityCode)
 
 
 def welcome():
