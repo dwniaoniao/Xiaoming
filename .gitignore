@@ -1,0 +1,5 @@
+ASRT/*
+audio/*
+*__pycache__*
+sttTest.py
+ttsTest.py
