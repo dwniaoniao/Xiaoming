@@ -3,6 +3,7 @@ from hashlib import md5
 import urllib
 import random
 import json
+from function.conversations import vpaSay
 
 APP_ID = '20190326000281166'
 SECRET_KEY = 'N9nPNA9xLRPateU6VE5M'
@@ -22,11 +23,18 @@ def translate(text, srcLanguge, dstLanguage):
 
     try:
         httpClient = httplib2.Http()
-        response, content = httpClient.request('http://api.fanyi.baidu.com'+myurl)
+        response, content = httpClient.request(
+            'http://api.fanyi.baidu.com'+myurl)
         result = json.loads(content)
         return result['trans_result'][0]['dst']
     except Exception as e:
         return None
+
+
+def inEnglish(text):
+    # tranlate Chinese txt into English
+    speechText = translate(text, 'zh', 'en')
+    vpaSay(speechText)
 
 # print(translate("programming",'en','zh'))
 # print(translate("中华人民共和国",'zh','en'))

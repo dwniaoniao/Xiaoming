@@ -3,7 +3,7 @@ import random
 
 
 def who_are_you():
-    message = ["我是你的个人助理。", "我就是我。", "我叫"]
+    message = ["我叫小明，我是你的个人助理。", "我就是我，小明", "我叫小明"]
     s = random.choice(message)
     vpaSay(s)
 

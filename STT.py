@@ -1,12 +1,18 @@
 import speech_recognition as sr
 from aip import AipSpeech
 from function import conversations
+import sys
+import os
 # import requests
 # from ASRT.general_function.file_wav import *
 
 APP_ID = '15829410'  # appid
 API_KEY = 'Hv1aDH7F04r2nPInpOsheXRz'  # ak
 SECRET_KEY = 'GdvbKVcrbXm479AvBkju5dedyGMaap2I'  # sk
+
+# close the stderr file descriptor, prevent the error message from frushing the screen.
+os.close(sys.stderr.fileno())
+
 
 def recordAudio():
     # record audio from the microphone into a wav file
@@ -21,11 +27,11 @@ def recordAudio():
 
 def recognizeSpeech():
     # recognize speech using baidu speech API
-    client = AipSpeech(APP_ID,API_KEY,SECRET_KEY)
+    client = AipSpeech(APP_ID, API_KEY, SECRET_KEY)
     recordAudio()
     result = client.asr(get_file_content('audio/recording.wav'),
                         'wav', 16000, {'dev_pid': 1537, })
-    if result['err_msg']=="success.":
+    if result['err_msg'] == "success.":
         return result['result'][0]
     else:
         conversations.undefined()
