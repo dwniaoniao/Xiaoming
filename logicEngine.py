@@ -19,7 +19,8 @@ def brain(name, speechText, cityName, cityCode):
     elif checkMessage("现在时间") or checkMessage("现在几点"):
         reportTime.what_is_time()
     elif checkMessage("天气如何") or checkMessage("当前天气") or checkMessage("现在天气"):
-        weather.weather(cityName, cityCode)
+        # weather.weather(cityName, cityCode)
+        weather.heWeatherNow(cityName)
     else:
         conversations.undefined()
 
