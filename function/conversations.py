@@ -3,7 +3,7 @@ import random
 
 
 def who_are_you():
-    message = ["我叫小明，我是你的个人助理。", "我就是我，小明", "我叫小明"]
+    message = ["我叫小明，我是你的个人助理。", "我就是我，小明。", "我叫小明。"]
     s = random.choice(message)
     vpaSay(s)
 
@@ -25,5 +25,5 @@ def undefined():
 
 
 def vpaSay(speech):
-    print(speech)
+    print("小明："+speech)
     baiduTTS(speech)

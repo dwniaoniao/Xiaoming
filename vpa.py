@@ -2,6 +2,7 @@ from STT import recognizeSpeech
 from TTS import baiduTTS
 from logicEngine import brain
 from function.conversations import vpaSay
+import sys
 
 name = "佳炜"
 cityName = "广州"
@@ -9,9 +10,13 @@ cityCode = "CHXX0037"
 
 
 def main():
-    speechText = recognizeSpeech()
-    if speechText:
-        print("我："+speechText)
+    if len(sys.argv) == 1:
+        speechText = recognizeSpeech()
+        if speechText:
+            print("我："+speechText)
+            brain(name, speechText, cityName, cityCode)
+    else:
+        speechText = sys.argv[1]
         brain(name, speechText, cityName, cityCode)
 
 
