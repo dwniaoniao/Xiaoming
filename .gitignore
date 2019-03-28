@@ -1,5 +1,6 @@
 ASRT/*
-audio/*
+*.wav
+*.mp3
 *__pycache__*
 sttTest.py
 ttsTest.py
