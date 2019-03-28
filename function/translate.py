@@ -4,9 +4,12 @@ import urllib
 import random
 import json
 from function.conversations import vpaSay
+from database.DBOperation import connectTODB,getBaiduTranslateAPIMsg
 
-APP_ID = '20190326000281166'
-SECRET_KEY = 'N9nPNA9xLRPateU6VE5M'
+baiduTranslateAPIMsg = getBaiduTranslateAPIMsg(connectTODB())
+
+APP_ID = baiduTranslateAPIMsg[0]
+SECRET_KEY = baiduTranslateAPIMsg[1]
 
 
 def translate(text, srcLanguge, dstLanguage):

@@ -5,7 +5,7 @@ import signal
 import httplib2
 import urllib
 import json
-
+from database.DBOperation import connectTODB,getHeWeatherAPIMsg
 
 def handler(signum, frame):
     raise AssertionError
@@ -32,7 +32,7 @@ def weather(cityName, cityCode):
 
 def heWeatherNow(city):
     # get current weather from heweather.com
-    key = "HE1903261045431672"
+    key = getHeWeatherAPIMsg(connectTODB())[0]
     url = "https://free-api.heweather.net/s6/weather?"
     myurl = url+"&location="+urllib.parse.quote(city)+"&key="+key
     try:

@@ -17,7 +17,9 @@ def main():
             brain(name, speechText, cityName, cityCode)
     else:
         speechText = sys.argv[1]
+        print("我："+speechText)
         brain(name, speechText, cityName, cityCode)
+        exit()
 
 
 def welcome():

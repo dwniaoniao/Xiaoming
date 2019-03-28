@@ -3,12 +3,14 @@ from aip import AipSpeech
 from function import conversations
 import sys
 import os
+from database.DBOperation import connectTODB, getBaiduSpeechAPIMsg
 # import requests
 # from ASRT.general_function.file_wav import *
 
-APP_ID = '15829410'  # appid
-API_KEY = 'Hv1aDH7F04r2nPInpOsheXRz'  # ak
-SECRET_KEY = 'GdvbKVcrbXm479AvBkju5dedyGMaap2I'  # sk
+baiduSpeechAPIMsg = getBaiduSpeechAPIMsg(connectTODB())
+APP_ID = baiduSpeechAPIMsg[0]  # appid
+API_KEY = baiduSpeechAPIMsg[1]  # ak
+SECRET_KEY = baiduSpeechAPIMsg[2]   # sk
 
 # close the stderr file descriptor, prevent the error message from frushing the screen.
 os.close(sys.stderr.fileno())

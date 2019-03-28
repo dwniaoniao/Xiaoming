@@ -18,7 +18,7 @@ def brain(name, speechText, cityName, cityCode):
         conversations.how_are_u()
     elif checkMessage("现在时间") or checkMessage("现在几点"):
         reportTime.what_is_time()
-    elif checkMessage("天气如何") or checkMessage("当前天气") or checkMessage("现在天气"):
+    elif checkMessage("天气如何") or checkMessage("天气怎样") or checkMessage("当前天气") or checkMessage("现在天气"):
         # weather.weather(cityName, cityCode)
         weather.heWeatherNow(cityName)
     elif "用英语怎么说" in speechText:
