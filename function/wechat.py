@@ -1,11 +1,18 @@
 import itchat
 from function.conversations import vpaSay
+from database.DBOperation import connectTODB
 
 
 def sendMessage(name, message):
     # send a text message to a wechat user named 'name'
+    connection = connectTODB()
     try:
-        if itchat.send_msg(toUserName=name, msg=message)['BaseResponse']['Ret'] == 0:
+        cursor = connection.cursor()
+        cursor.execute(
+            "select wechatNickName from contacts where name = '"+name+"'")
+        for x in cursor:
+            wechatUserName = itchat.search_friends(x[0])[0].userName
+        if itchat.send_msg(toUserName=wechatUserName, msg=message)['BaseResponse']['Ret'] == 0:
             r = "消息发送成功。"
         else:
             r = "消息发送失败。"
@@ -14,3 +21,4 @@ def sendMessage(name, message):
         r = "消息发送失败。"
     finally:
         vpaSay(r)
+        connection.close()

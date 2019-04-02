@@ -1,9 +1,19 @@
 from function.conversations import vpaSay
 from database.DBOperation import connectTODB
 from datetime import datetime
+from STT import recognizeSpeech
+import re
 
 
-def createNote(title, content, user):
+def createNote(title, user):
+    vpaSay("请录入内容：")
+    content = ''
+    while True:
+        paragragh = recognizeSpeech()
+        if not re.match("^录入结束\w*", paragragh):
+            content += paragragh + '\n'
+        else:
+            break
     dateAndTime = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
     connection = connectTODB()
     if connection:

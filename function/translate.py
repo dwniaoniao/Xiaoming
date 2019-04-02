@@ -4,7 +4,7 @@ import urllib
 import random
 import json
 from function.conversations import vpaSay
-from database.DBOperation import connectTODB,getBaiduTranslateAPIMsg
+from database.DBOperation import connectTODB, getBaiduTranslateAPIMsg
 
 baiduTranslateAPIMsg = getBaiduTranslateAPIMsg(connectTODB())
 

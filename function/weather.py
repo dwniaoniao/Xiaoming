@@ -5,7 +5,8 @@ import signal
 import httplib2
 import urllib
 import json
-from database.DBOperation import connectTODB,getHeWeatherAPIMsg
+from database.DBOperation import connectTODB, getHeWeatherAPIMsg
+
 
 def handler(signum, frame):
     raise AssertionError
