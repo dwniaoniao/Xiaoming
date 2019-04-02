@@ -1,6 +1,9 @@
 ASRT/*
 *.wav
 *.mp3
+*.txt
 *__pycache__*
 sttTest.py
 ttsTest.py
+noteTest.py
+wechatTest.py

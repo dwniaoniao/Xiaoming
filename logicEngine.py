@@ -1,4 +1,4 @@
-from function import conversations, reportTime, weather, translate
+from function import *
 import jieba
 
 
@@ -24,6 +24,10 @@ def brain(name, speechText, cityName, cityCode):
     elif "用英语怎么说" in speechText:
         speechText = speechText.replace('用英语怎么说', '')
         translate.inEnglish(speechText)
+    elif "微信":
+        pass
+    elif "笔记":
+        pass
     else:
         conversations.undefined()
 

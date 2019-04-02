@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from STT import recognizeSpeech
 from TTS import baiduTTS
 from logicEngine import brain
