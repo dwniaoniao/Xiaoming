@@ -3,7 +3,7 @@ import jieba
 import re
 import itchat
 
-def brain(name, speechText, cityName, cityCode):
+def brain(userID,name, speechText, cityName, cityCode):
     def checkMessage(textToCheck):
         # check if the speech text match the keyword
         if cutText(textToCheck).issubset(cutText(speechText)):
@@ -29,17 +29,17 @@ def brain(name, speechText, cityName, cityCode):
         if re.search("创建名为\w+的笔记",speechText):
             match=re.search("创建名为\w+的笔记",speechText)
             title = match.group().replace("创建名为","").replace("的笔记","")
-            note.createNote(title,name)
+            note.createNote(title,userID)
         elif checkMessage("获取笔记"):
-            conversations.vpaSay(note.getNote(name)[1])
+            conversations.vpaSay(note.getNote(userID)[1])
         elif checkMessage("导出笔记"):
-            note.exportNote(name)
+            note.exportNote(userID)
     elif re.search("微信(告诉|给|问){0,1}\w+说\w+",speechText):
         s = re.search("微信(告诉|给|问){0,1}\w+说\w+",speechText).group()
         s = re.sub("微信(告诉|给|问){0,1}","",s)
         contactName=re.search("^\w+说",s).group().replace("说","")
         message = s.replace(re.search("^\w+说",s).group(),"")
-        wechat.sendMessage(contactName,message)
+        wechat.sendMessage(userID,contactName,message)
     else:
         conversations.undefined()
 

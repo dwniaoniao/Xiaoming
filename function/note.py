@@ -5,7 +5,7 @@ from STT import recognizeSpeech
 import re
 
 
-def createNote(title, user):
+def createNote(title, userID):
     vpaSay("请录入内容：")
     content = ''
     while True:
@@ -19,9 +19,6 @@ def createNote(title, user):
     if connection:
         cursor = connection.cursor()
         try:
-            cursor.execute("select id from users where name = '"+user+"'")
-            for x in cursor:
-                userID = x[0]
             cursor.execute("insert into notes value (default,%s,%s,%s,%s)",
                            (title, content, dateAndTime, userID))
         except Exception as e:
@@ -36,14 +33,11 @@ def createNote(title, user):
     pass
 
 
-def getNote(user):
+def getNote(userID):
     connection = connectTODB()
     if connection:
         cursor = connection.cursor()
         try:
-            cursor.execute("select id from users where name = '"+user+"'")
-            for x in cursor:
-                userID = x[0]
             cursor.execute("select * from notes where id = "+str(userID))
             r = ''
             for x in cursor:
@@ -62,8 +56,8 @@ def getNote(user):
     pass
 
 
-def exportNote(user):
-    notes = getNote(user)[0]
+def exportNote(userID):
+    notes = getNote(userID)[0]
     if notes:
         with open('notes/notes.txt', 'w') as f:
             f.write(notes)
