@@ -2,7 +2,7 @@ import mysql.connector as mariadb
 
 
 def connectTODB():
-    # connect to the database, if success, return the connection, else, retrun None
+    # connect to the database, if success, return the connection, else, return None
     user = 'root'
     password = 'password'
     database = 'XIAOMING'

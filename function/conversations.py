@@ -1,4 +1,4 @@
-from TTS import baiduTTS
+from TTS import tts
 import random
 
 
@@ -26,4 +26,4 @@ def undefined():
 
 def vpaSay(speech):
     print("小明："+speech)
-    baiduTTS(speech)
+    tts(speech, debugMode=True)

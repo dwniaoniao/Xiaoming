@@ -13,17 +13,14 @@ cityCode = "CHXX0037"
 
 
 def main():
-    if len(sys.argv) == 1:
-        speechText = recognizeSpeech()
-        if speechText:
-            print("我："+speechText)
-            brain(userID,name, speechText, cityName, cityCode)
-        itchat.logout()
+    if len(sys.argv) > 1 and sys.argv[1] == 'debug':
+        debugMode = True
     else:
-        speechText = sys.argv[1]
+        debugMode = False
+    speechText = recognizeSpeech(debugMode)
+    if speechText:
         print("我："+speechText)
         brain(userID, name, speechText, cityName, cityCode)
-        exit()
 
 
 def welcome():
@@ -33,9 +30,10 @@ def welcome():
 #     itchat.login()
 # except Exception as e:
 #     print("无法登陆微信。")
-#     print(e) 
+#     print(e)
 # finally:
 #     pass
+
 
 welcome()
 

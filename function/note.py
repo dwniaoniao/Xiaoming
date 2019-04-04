@@ -9,7 +9,7 @@ def createNote(title, userID):
     vpaSay("请录入内容：")
     content = ''
     while True:
-        paragragh = recognizeSpeech()
+        paragragh = recognizeSpeech(debugMode=True)
         if not re.match("^录入结束\w*", paragragh):
             content += paragragh + '\n'
         else:
@@ -65,3 +65,20 @@ def exportNote(userID):
     else:
         vpaSay("笔记导出失败。")
     pass
+
+
+def deleteNote(userID, title):
+    connection = connectTODB()
+    try:
+        cursor = connection.cursor()
+        cursor.execute(
+            "delete from notes where title = %s and id = %s", (title, userID))
+    except Exception as e:
+        r = "删除笔记失败。"
+        print(e)
+    else:
+        connection.commit()
+        r = "删除笔记成功。"
+    finally:
+        connection.close()
+        vpaSay(r)

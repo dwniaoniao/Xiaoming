@@ -48,6 +48,6 @@ def userLogin():
     password = getpass.getpass('password: ')
     result = verifyUser(name, password)
     if result['result'] == 'accepted':
-        return result['userID'],result['name'], result['city'], result['email']
+        return result['userID'], result['name'], result['city'], result['email']
     else:
         return None

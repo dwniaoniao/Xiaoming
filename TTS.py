@@ -63,3 +63,10 @@ def playWAV(wavFilePath):
 def espeakTTS(strToConvert):
     # conver text to speech use espeak
     system("espeak -v zh "+strToConvert)
+
+
+def tts(strToConvert, debugMode=False):
+    if debugMode == False:
+        return baiduTTS(strToConvert)
+    else:
+        return espeakTTS(strToConvert)

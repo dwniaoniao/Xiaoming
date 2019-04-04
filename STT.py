@@ -13,7 +13,7 @@ API_KEY = baiduSpeechAPIMsg[1]  # ak
 SECRET_KEY = baiduSpeechAPIMsg[2]   # sk
 
 # close the stderr file descriptor, prevent the error message from frushing the screen.
-os.close(sys.stderr.fileno())
+# os.close(sys.stderr.fileno())
 
 
 def recordAudio():
@@ -27,17 +27,21 @@ def recordAudio():
         f.write(audio.get_wav_data(convert_rate=16000))
 
 
-def recognizeSpeech():
+def recognizeSpeech(debugMode=False):
     # recognize speech using baidu speech API
-    client = AipSpeech(APP_ID, API_KEY, SECRET_KEY)
-    recordAudio()
-    result = client.asr(get_file_content('audio/recording.wav'),
-                        'wav', 16000, {'dev_pid': 1537, })
-    if result['err_msg'] == "success.":
-        return result['result'][0]
+    if debugMode == True:
+        print("Say something!")
+        return input()
     else:
-        conversations.undefined()
-        return None
+        client = AipSpeech(APP_ID, API_KEY, SECRET_KEY)
+        recordAudio()
+        result = client.asr(get_file_content('audio/recording.wav'),
+                            'wav', 16000, {'dev_pid': 1537, })
+        if result['err_msg'] == "success.":
+            return result['result'][0]
+        else:
+            conversations.undefined()
+            return None
 
 
 def get_file_content(filePath):
