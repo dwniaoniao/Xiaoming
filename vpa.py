@@ -1,15 +1,21 @@
 #!/usr/bin/python3
-from STT import recognizeSpeech
-from TTS import baiduTTS
+from STT import stt
 from logicEngine import brain
 from function.conversations import vpaSay
 import sys
 import itchat
+from userManagement import userManagement
 
-userID = 7
-name = "佳炜"
-cityName = "广州"
-cityCode = "CHXX0037"
+while True:
+    r = userManagement.userLogin()
+    if r:
+        userID = r[0]
+        name = r[1]
+        cityName = r[2]
+        emailt = r[3]
+        cityCode = ''
+        break
+    print("用户名或密码错误。")
 
 
 def main():
@@ -17,7 +23,7 @@ def main():
         debugMode = True
     else:
         debugMode = False
-    speechText = recognizeSpeech(debugMode)
+    speechText = stt(debugMode)
     if speechText:
         print("我："+speechText)
         brain(userID, name, speechText, cityName, cityCode)

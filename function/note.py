@@ -1,7 +1,7 @@
 from function.conversations import vpaSay
 from database.DBOperation import connectTODB
 from datetime import datetime
-from STT import recognizeSpeech
+from STT import stt
 import re
 
 
@@ -9,7 +9,7 @@ def createNote(title, userID):
     vpaSay("请录入内容：")
     content = ''
     while True:
-        paragragh = recognizeSpeech(debugMode=True)
+        paragragh = stt(debugMode=True)
         if not re.match("^录入结束\w*", paragragh):
             content += paragragh + '\n'
         else:

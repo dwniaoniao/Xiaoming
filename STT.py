@@ -27,21 +27,17 @@ def recordAudio():
         f.write(audio.get_wav_data(convert_rate=16000))
 
 
-def recognizeSpeech(debugMode=False):
+def recognizeSpeech():
     # recognize speech using baidu speech API
-    if debugMode == True:
-        print("Say something!")
-        return input()
+    client = AipSpeech(APP_ID, API_KEY, SECRET_KEY)
+    recordAudio()
+    result = client.asr(get_file_content('audio/recording.wav'),
+                        'wav', 16000, {'dev_pid': 1537, })
+    if result['err_msg'] == "success.":
+        return result['result'][0]
     else:
-        client = AipSpeech(APP_ID, API_KEY, SECRET_KEY)
-        recordAudio()
-        result = client.asr(get_file_content('audio/recording.wav'),
-                            'wav', 16000, {'dev_pid': 1537, })
-        if result['err_msg'] == "success.":
-            return result['result'][0]
-        else:
-            conversations.undefined()
-            return None
+        conversations.undefined()
+        return None
 
 
 def get_file_content(filePath):
@@ -49,6 +45,13 @@ def get_file_content(filePath):
     with open(filePath, 'rb') as fp:
         return fp.read()
 
+
+def stt(debugMode=False):
+    if debugMode == True:
+        print("Say something!")
+        return input()
+    else:
+        return recognizeSpeech()
 
 # def recognizeSpeech2():
 #     # recognize speech using ASRT speech recognition server
