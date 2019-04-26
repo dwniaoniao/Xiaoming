@@ -1,10 +1,14 @@
-from function import conversations, note, reportTime, translate, weather, wechat, contact
+from function import conversations, note, reportTime, translate, weather, wechat, contact, baike, news
 import jieba
 import re
 import itchat
 
 
 def brain(userID, name, speechText, cityName, cityCode):
+    def cutText(textToCut):
+        # cut a Chinese string into tokens
+        return set(','.join(jieba.cut(textToCut)).split(','))
+
     def checkMessage(textToCheck):
         # check if the speech text match the keyword
         if cutText(textToCheck).issubset(cutText(speechText)):
@@ -18,9 +22,9 @@ def brain(userID, name, speechText, cityName, cityCode):
         conversations.who_am_i(name)
     elif checkMessage("你好吗"):
         conversations.how_are_u()
-    elif checkMessage("现在时间") or checkMessage("现在几点"):
+    elif checkMessage("时间") or checkMessage("几点"):
         reportTime.what_is_time()
-    elif checkMessage("天气如何") or checkMessage("天气怎样") or checkMessage("当前天气") or checkMessage("现在天气"):
+    elif checkMessage("天气"):
         # weather.weather(cityName, cityCode)
         weather.heWeatherNow(cityName)
     elif "用英语怎么说" in speechText:
@@ -58,10 +62,13 @@ def brain(userID, name, speechText, cityName, cityCode):
         contactName = re.search("^\w+说", s).group().replace("说", "")
         message = s.replace(re.search("^\w+说", s).group(), "")
         wechat.sendMessage(userID, contactName, message)
+
+    elif checkMessage("解释"):
+        speechText = speechText.replace("解释", "")
+        baike.baike(speechText)
+
+    elif checkMessage("新闻"):
+        news.getNews()
+
     else:
         conversations.undefined()
-
-
-def cutText(textToCut):
-    # cut a Chinese string into tokens
-    return set(','.join(jieba.cut(textToCut)).split(','))

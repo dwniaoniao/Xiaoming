@@ -7,6 +7,7 @@ def sendMessage(userID, name, message):
     # send a text message to a wechat user named 'name'
     connection = connectTODB()
     try:
+        itchat.auto_login(hotReload=True)
         cursor = connection.cursor()
         cursor.execute(
             "select wechatNickName from contacts where id = %s and name =%s", (str(userID), name))
