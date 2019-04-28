@@ -1,11 +1,10 @@
 #!/usr/bin/python3
 from STT import stt
 from logicEngine import brain
-from function.conversations import vpaSay
+from function.conversations import vpaSay, say_a_word, recite_a_poetry
 import sys
-import itchat
 from userManagement import userManagement
-
+import random
 
 def checkUser(debugMode):
     if debugMode == False:
@@ -26,6 +25,8 @@ def main(debugMode):
 
 
 def welcome():
+    f = random.choice((say_a_word, recite_a_poetry))
+    f()
     vpaSay("你好,"+name + ",我可以为你做些什么?")
 
 

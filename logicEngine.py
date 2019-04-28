@@ -1,5 +1,6 @@
 from function import conversations, note, reportTime, translate, weather, wechat, contact, baike, news
 import jieba
+import jieba.posseg as pseg
 import re
 import itchat
 
@@ -22,6 +23,8 @@ def brain(userID, name, speechText, cityName, cityCode):
         conversations.who_am_i(name)
     elif checkMessage("你好吗"):
         conversations.how_are_u()
+    elif checkMessage("背诗") or checkMessage("来首诗"):
+        conversations.recite_a_poetry()
     elif checkMessage("时间") or checkMessage("几点"):
         reportTime.what_is_time()
     elif checkMessage("天气"):
@@ -64,11 +67,14 @@ def brain(userID, name, speechText, cityName, cityCode):
         wechat.sendMessage(userID, contactName, message)
 
     elif checkMessage("解释"):
-        speechText = speechText.replace("解释", "")
-        baike.baike(speechText)
+        words = pseg.cut(speechText)
+        for word in words:
+            if word.word != "解释" and word.flag != "x":
+                baike.baike(word.word)
 
     elif checkMessage("新闻"):
         news.getNews()
 
     else:
         conversations.undefined()
+
