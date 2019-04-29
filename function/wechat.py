@@ -1,5 +1,4 @@
 import itchat
-from function.conversations import vpaSay
 from database.DBOperation import connectTODB
 
 
@@ -21,5 +20,5 @@ def sendMessage(userID, name, message):
         print(e)
         r = "消息发送失败。"
     finally:
-        vpaSay(r)
         connection.close()
+        return r

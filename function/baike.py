@@ -1,7 +1,6 @@
 from urllib.parse import quote
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
-from function.conversations import vpaSay
 
 
 def baike(word):
@@ -10,7 +9,9 @@ def baike(word):
         html = urlopen(url)
         bs = BeautifulSoup(html, 'html.parser')
         x = bs.find('div', {'class': 'summary'})
-        vpaSay(x.p.get_text())
+        speechText = x.p.get_text()
     except Exception as e:
         print(e)
-        vpaSay("未找到与”" + word + "“相关词条")
+        speechText = "未找到与”" + word + "“相关词条"
+    finally:
+        return speechText

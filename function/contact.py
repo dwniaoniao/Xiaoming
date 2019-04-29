@@ -1,46 +1,85 @@
 from database.DBOperation import connectTODB
-from function.conversations import vpaSay
+import tkinter as tk
+import tkinter.messagebox
 
 
 def createContact(userID):
-    connection = connectTODB()
-    name = input("名称： ")
-    phone = input("电话： ")
-    email = input("邮件地址： ")
-    wechatNickName = input("微信昵称： ")
-    try:
-        cursor = connection.cursor()
-        cursor.execute("insert into contacts value (default,%s,%s,%s,%s,%s)",
-                       (name, phone, email, wechatNickName, str(userID)))
-    except Exception as e:
-        r = "联系人创建失败。"
-        print(e)
-    else:
-        connection.commit()
-        r = "联系人创建成功。"
-    finally:
-        connection.close()
-        vpaSay(r)
+    createContactWindow = tk.Tk()
+    tk.Label(createContactWindow, text='name').grid(row=0, sticky='w')
+    tk.Label(createContactWindow, text='phone').grid(row=1, sticky='w')
+    tk.Label(createContactWindow, text='email').grid(row=2, sticky='w')
+    tk.Label(createContactWindow, text='wechatNickName').grid(
+        row=3, sticky='w')
+    nameEntry = tk.Entry(createContactWindow)
+    phoneEntry = tk.Entry(createContactWindow)
+    emailEntry = tk.Entry(createContactWindow)
+    wechatNickNameEntry = tk.Entry(createContactWindow)
+    nameEntry.grid(row=0, column=1, sticky='e')
+    phoneEntry.grid(row=1, column=1, sticky='e')
+    emailEntry.grid(row=2, column=1, sticky='e')
+    wechatNickNameEntry.grid(row=3, column=1, sticky='e')
+
+    def createContactButtonCommand():
+        name = nameEntry.get()
+        phone = phoneEntry.get()
+        email = emailEntry.get()
+        wechatNickName = wechatNickNameEntry.get()
+        connection = connectTODB()
+        try:
+            cursor = connection.cursor()
+            cursor.execute("insert into contacts value (default,%s,%s,%s,%s,%s)",
+                           (name, phone, email, wechatNickName, str(userID)))
+        except Exception as e:
+            r = "联系人创建失败。"
+            tkinter.messagebox.showerror(title='Error', message=r)
+            print(e)
+        else:
+            connection.commit()
+            r = "联系人创建成功。"
+            tkinter.messagebox.showinfo(title='Success', message=r)
+            createContactWindow.destroy()
+        finally:
+            connection.close()
+    tk.Button(createContactWindow, text='Create',
+              command=createContactButtonCommand).grid(row=4, column=1, sticky='e')
 
 
 def getContact(userID):
+    getContactWindow = tk.Tk()
+    contactText = tk.Text(getContactWindow)
+    contactText.pack(expand='yes', fill='both')
+    scrollBar = tk.Scrollbar(contactText)
+    contactText.configure(yscrollcommand=scrollBar.set)
+    scrollBar.pack(side='right', fill='y')
+
+    def closeButtonCommand():
+        getContactWindow.destroy()
+
     connection = connectTODB()
     try:
         cursor = connection.cursor(dictionary=True)
         cursor.execute(
             "select name,phone,email,wechatNickName from contacts where id = "+str(userID))
-        r = []
+        r = ''
         for x in cursor:
-            r.append(x)
+            r += 'name:'+'\t\t'+x['name']+'\n' + \
+                'phone:'+'\t\t'+x['phone']+'\n' +\
+                'email:'+'\t\t'+x['email']+'\n' +\
+                'wechatNickName:'+'\t'+x['wechatNickName']+'\n'
     except Exception as e:
         speechText = "获取联系人失败。"
         r = None
+        tkinter.messagebox.showerror(title='Error', message=speechText)
+        getContactWindow.destroy()
     else:
         speechText = "获取联系人成功。"
+        contactText.insert(1.0, r)
+        contactText.update()
+
     finally:
         connection.close()
-        vpaSay(speechText)
-        return r
+    tk.Button(getContactWindow, text='ok', command=closeButtonCommand).pack()
+    return r, speechText
 
 
 def deleteContact(userID, name):
@@ -58,4 +97,4 @@ def deleteContact(userID, name):
         r = "删除联系人成功。"
     finally:
         connection.close()
-        vpaSay(r)
+        return r

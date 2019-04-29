@@ -43,9 +43,7 @@ def verifyUser(name, password):
         return result
 
 
-def userLogin():
-    name = input('name: ')
-    password = getpass.getpass('password: ')
+def userLogin(name, password):
     result = verifyUser(name, password)
     if result['result'] == 'accepted':
         return result['userID'], result['name'], result['city'], result['email']

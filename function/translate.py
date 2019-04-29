@@ -3,7 +3,6 @@ from hashlib import md5
 import urllib
 import random
 import json
-from function.conversations import vpaSay
 from database.DBOperation import connectTODB, getBaiduTranslateAPIMsg
 
 baiduTranslateAPIMsg = getBaiduTranslateAPIMsg(connectTODB())
@@ -37,7 +36,4 @@ def translate(text, srcLanguge, dstLanguage):
 def inEnglish(text):
     # tranlate Chinese txt into English
     speechText = translate(text, 'zh', 'en')
-    vpaSay(speechText)
-
-# print(translate("programming",'en','zh'))
-# print(translate("中华人民共和国",'zh','en'))
+    return speechText
