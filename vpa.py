@@ -80,10 +80,10 @@ def login():
 
         if debugMode == True:
             def sendButtonCommand():
-                speechText = inputText.get(1.0, 'end')
-                if speechText.strip():
+                speechText = inputText.get(1.0, 'end').strip()
+                if speechText:
                     inputText.delete(1.0, 'end')
-                    dialogueText.insert('end', "我："+speechText)
+                    dialogueText.insert('end', "我："+speechText+'\n')
                     dialogueText.update()
                     speechText = brain(
                         userID, name, speechText, cityName, cityCode)

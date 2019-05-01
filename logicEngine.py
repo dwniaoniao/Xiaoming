@@ -3,6 +3,7 @@ import jieba
 import jieba.posseg as pseg
 import re
 import itchat
+import _thread
 
 
 def brain(userID, name, speechText, cityName, cityCode):
@@ -17,6 +18,42 @@ def brain(userID, name, speechText, cityName, cityCode):
         else:
             return False
 
+    def chineseToArabic(s):
+        # convert string s which contain some numbers write in Chinese to Arabic
+        # number like "一" is "1"
+        # number like "两万" is "20000"
+        d = {"零": 0, "一": 1, "二": 2, "两": 2, "三": 3, "四": 4, "五": 5, "六": 6,
+             "七": 7, "八": 8, "九": 9, "十": 10, "百": 100, "千": 1000, "万": 10000}
+        u = ['十', '百', '千', '万']
+        d2 = {}
+
+        def getNumber(s):
+            l = []
+            numberString = ''
+            for c in s:
+                if c in d.keys():
+                    numberString += c
+                elif numberString:
+                    l.append(numberString)
+                    numberString = ''
+            if numberString:
+                l.append(numberString)
+            return l
+
+        def convertToArabic(s):
+            if len(s) == 1:
+                return d.get(s)
+            elif len(s) == 2 and s[1] in u:
+                return d.get(s[0])*d.get(s[1])
+            else:
+                pass
+        for i in getNumber(s):
+            d2[i] = convertToArabic(i)
+        for k in d2.keys():
+            s = s.replace(k, str(d2.get(k)))
+
+        return s
+
     if checkMessage("你是谁"):
         return conversations.who_are_you()
     elif checkMessage("我是谁"):
@@ -27,6 +64,25 @@ def brain(userID, name, speechText, cityName, cityCode):
         return conversations.recite_a_poetry()
     elif checkMessage("时间") or checkMessage("几点"):
         return reportTime.what_is_time()
+    elif checkMessage("倒计时"):
+        speechText = chineseToArabic(speechText)
+        match = re.search('[0-9]+\w{0,1}时', speechText)
+        if match:
+            h = int(re.search('[0-9]*', match.group()).group())
+        else:
+            h = 0
+        match = re.search('[0-9]+分', speechText)
+        if match:
+            m = int(re.search('[0-9]*', match.group()).group())
+        else:
+            m = 0
+        match = re.search('[0-9]+秒', speechText)
+        if match:
+            s = int(re.search('[0-9]*', match.group()).group())
+        else:
+            s = 0
+        _thread.start_new_thread(reportTime.countdown, (), {
+                                 'h': h, 'm': m, 's': s})
     elif checkMessage("天气"):
         return weather.heWeatherNow(cityName)
     elif "用英语怎么说" in speechText:

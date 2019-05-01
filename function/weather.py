@@ -5,7 +5,6 @@ import httplib2
 import urllib
 import json
 from database.DBOperation import connectTODB, getHeWeatherAPIMsg
-import pysnooper
 
 
 def handler(signum, frame):
@@ -31,7 +30,6 @@ def weather(cityName, cityCode):
         return speechText
 
 
-@pysnooper.snoop()
 def heWeatherNow(city):
     # get current weather from heweather.com
     key = getHeWeatherAPIMsg(connectTODB())[0]
