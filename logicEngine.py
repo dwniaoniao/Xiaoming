@@ -61,6 +61,9 @@ def brain(userID, name, speechText, cityName, cityCode):
     elif checkMessage("你好吗"):
         return conversations.how_are_u()
     elif checkMessage("背诗") or checkMessage("来首诗"):
+        for i in pseg.cut(speechText):
+            if i.flag == 'nr':
+                return conversations.recite_a_poetry_of_author(i.word)
         return conversations.recite_a_poetry()
     elif checkMessage("时间") or checkMessage("几点"):
         return reportTime.what_is_time()

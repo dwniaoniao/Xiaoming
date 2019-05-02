@@ -49,8 +49,9 @@ def login():
             return speechText
 
         def welcome():
-            f = random.choice((say_a_word, recite_a_poetry))
-            s = f()
+            # f = random.choice((say_a_word, recite_a_poetry))
+            # s = f()
+            s = say_a_word()
             s += "\n你好,"+name + ",我可以为你做些什么?\n"
             return s
 
