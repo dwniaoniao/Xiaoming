@@ -4,6 +4,8 @@ import urllib
 import random
 import json
 from database.DBOperation import connectTODB, getBaiduTranslateAPIMsg
+import tkinter as tk
+import tkinter.messagebox
 
 baiduTranslateAPIMsg = getBaiduTranslateAPIMsg(connectTODB())
 
@@ -37,3 +39,43 @@ def inEnglish(text):
     # tranlate Chinese txt into English
     speechText = translate(text, 'zh', 'en')
     return speechText
+
+
+def freeTranslate():
+    translateWindow = tk.Tk()
+    settingFrame = tk.Frame(translateWindow,relief='raised')
+    settingFrame.pack(side='top',fill='x')
+    tk.Label(settingFrame,text='From').pack(side='left')
+    fromEntry = tk.Entry(settingFrame)
+    fromEntry.insert('end','auto')
+    fromEntry.pack(side='left')
+    tk.Label(settingFrame,text='To').pack(side='left')
+    toEntry = tk.Entry(settingFrame)
+    toEntry.insert('end','zh')
+    toEntry.pack(side='left')
+
+    srcLangugeText = tk.Text(translateWindow)
+    srcLangugeText.pack(expand='yes',fill='both')
+    dstLanguageText = tk.Text(translateWindow)
+    dstLanguageText.pack(expand='yes',fill='both')
+
+    def translateButtonCommand():
+        try:
+            text = srcLangugeText.get(1.0,'end')
+            textList = text.splitlines()
+            srcLanguge = fromEntry.get()
+            dstLanguage = toEntry.get()
+            dstLanguageText.delete(1.0,'end')
+            for i in textList:
+                if i.strip():
+                    dstLanguageText.insert('end',translate(i,srcLanguge,dstLanguage)+'\n')
+                    dstLanguageText.update()
+        except Exception as e:
+            tkinter.messagebox.showerror(title='Error',message=e)
+    
+    def closeButtonCommand():
+        translateWindow.destroy()
+
+    tk.Button(settingFrame,text='Close',command=closeButtonCommand).pack(side='right')
+    tk.Button(settingFrame,text='Translate', command=translateButtonCommand).pack(side='right')
+    translateWindow.mainloop()

@@ -2,7 +2,6 @@ from function import conversations, note, reportTime, translate, weather, wechat
 import jieba
 import jieba.posseg as pseg
 import re
-import itchat
 import _thread
 
 
@@ -87,10 +86,15 @@ def brain(userID, name, speechText, cityName, cityCode):
         _thread.start_new_thread(reportTime.countdown, (), {
                                  'h': h, 'm': m, 's': s})
     elif checkMessage("天气"):
+        for i in pseg.cut(speechText):
+            if i.flag == 'ns':
+                return weather.heWeatherNow(i.word)
         return weather.heWeatherNow(cityName)
     elif "用英语怎么说" in speechText:
         speechText = speechText.replace('用英语怎么说', '')
         return translate.inEnglish(speechText)
+    elif checkMessage("翻译"):
+        _thread.start_new_thread(translate.freeTranslate, ())
     elif checkMessage("笔记"):
         if checkMessage("创建") or checkMessage("新建"):
             note.createNote(userID)

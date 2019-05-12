@@ -1,8 +1,5 @@
-from TTS import tts
 import random
 from database.DBOperation import connectTODB
-import random
-
 
 def who_are_you():
     message = ["我叫小明，我是你的个人助理。", "我就是我，小明。", "我叫小明。"]

@@ -9,10 +9,10 @@ import pysnooper
 
 def createNote(userID):
     createNoteWindow = tk.Tk()
-    tk.Label(createNoteWindow, text='title').pack()
+    tk.Label(createNoteWindow, text='标题').pack()
     titleEntry = tk.Entry(createNoteWindow)
     titleEntry.pack(expand='yes', fill='x')
-    tk.Label(createNoteWindow, text='content').pack()
+    tk.Label(createNoteWindow, text='正文').pack()
     contentText = tk.Text(createNoteWindow)
     contentText.pack(expand='yes', fill='both')
 
@@ -37,7 +37,7 @@ def createNote(userID):
                 createNoteWindow.destroy()
             finally:
                 connection.close()
-    tk.Button(createNoteWindow, text='Create',
+    tk.Button(createNoteWindow, text='创建',
               command=createNoteButtonCommand).pack()
 
 

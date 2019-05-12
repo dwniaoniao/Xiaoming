@@ -5,10 +5,10 @@ import tkinter.messagebox
 
 def createContact(userID):
     createContactWindow = tk.Tk()
-    tk.Label(createContactWindow, text='name').grid(row=0, sticky='w')
-    tk.Label(createContactWindow, text='phone').grid(row=1, sticky='w')
-    tk.Label(createContactWindow, text='email').grid(row=2, sticky='w')
-    tk.Label(createContactWindow, text='wechatNickName').grid(
+    tk.Label(createContactWindow, text='名称').grid(row=0, sticky='w')
+    tk.Label(createContactWindow, text='电话').grid(row=1, sticky='w')
+    tk.Label(createContactWindow, text='邮箱地址').grid(row=2, sticky='w')
+    tk.Label(createContactWindow, text='微信昵称').grid(
         row=3, sticky='w')
     nameEntry = tk.Entry(createContactWindow)
     phoneEntry = tk.Entry(createContactWindow)
@@ -40,7 +40,7 @@ def createContact(userID):
             createContactWindow.destroy()
         finally:
             connection.close()
-    tk.Button(createContactWindow, text='Create',
+    tk.Button(createContactWindow, text='创建',
               command=createContactButtonCommand).grid(row=4, column=1, sticky='e')
 
 
@@ -62,10 +62,10 @@ def getContact(userID):
             "select name,phone,email,wechatNickName from contacts where id = "+str(userID))
         r = ''
         for x in cursor:
-            r += 'name:'+'\t\t'+x['name']+'\n' + \
-                'phone:'+'\t\t'+x['phone']+'\n' +\
-                'email:'+'\t\t'+x['email']+'\n' +\
-                'wechatNickName:'+'\t'+x['wechatNickName']+'\n'
+            r += '姓名：'+'\t'+x['name']+'\n' + \
+                '电话：'+'\t'+x['phone']+'\n' +\
+                '邮箱地址：'+'\t'+x['email']+'\n' +\
+                '微信昵称：'+'\t'+x['wechatNickName']+'\n'
     except Exception as e:
         speechText = "获取联系人失败。"
         r = None
