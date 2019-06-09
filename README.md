@@ -3,7 +3,7 @@
 百科知识、新闻查询、联系人管理、笔记、代发微信消息和时钟功能。本文介绍如何在Linux平台下安装配置和使用该系统，
 其他平台上的安装配置过程也基本一致，在此不多做介绍。
 
-![](test.png)
+![](https://raw.githubusercontent.com/dwniaoniao/Xiaoming/ui/img/test.png?token=AHB4P6EAXP3QVT7R6C4W2JK47UJV4)
 ## 使用前配置
 ### 解决依赖
 开始配置本系统前，应确保正确安装MariaDB和Python3，扬声器和麦克风工作正常，并连接至因特网。然后打开终端，运行如下的
